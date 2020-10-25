@@ -1,4 +1,4 @@
-package com.vehicle.persistence;
+package com.vehicles.persistence;
 
 import java.util.ArrayList;
 import java.util.List;

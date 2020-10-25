@@ -1,5 +1,7 @@
 package com.vehicles.project;
 
+import java.util.List;
+
 public class Bike extends Vehicle {
 
 	public Bike(String plate, String brand, String color) {
@@ -7,7 +9,7 @@ public class Bike extends Vehicle {
 	}
 	
 	
-	//Metodo no operativo en el modulo 1
+	
 	@Override
 	public String getVehicle() {
 		String vehicle="";
