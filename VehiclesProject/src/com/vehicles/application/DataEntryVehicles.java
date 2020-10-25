@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.vehicles.persistence.VehiclesRepository;
+import com.vehicles.project.Bike;
 import com.vehicles.project.Car;
 import com.vehicles.project.Vehicle;
 import com.vehicles.project.Wheel;
@@ -18,31 +19,45 @@ public class DataEntryVehicles {
 	private VehiclesRepository repository = new VehiclesRepository();
 		
 	//Metodo para controlar la entrada de vehiculos
-	public boolean dataEntryVehicles() throws Exception {
+	public void dataEntryVehiclestypecar() throws Exception {
 		String brand="";
 		String color="";
 		String plate="";
-		boolean controlintroducciondatos=false;
-		do{ //Bucle para realizar entradas de datos mientras no se produzca una entrada vacia.
-			brand=color=plate="";//Ponemos a 0 las variables cada vez que entramos en el bucle
-			brand=dataentrybrand();
-			if (brand.isEmpty()) break;//En el caso
-			controlintroducciondatos=true;
-			color=dataEntryColor();
-			plate=dataEntryPlate();
-			
-			createCar(brand, color, plate);//LLamar al método para almacenar la info
-		}while (!brand.isEmpty());
-		//brand.
-		return controlintroducciondatos;
-	}
+		
 
+		brand=color=plate="";//Ponemos a 0 las variables cada vez que entramos en el bucle
+		brand=dataentrybrand();
+	
+		color=dataEntryColor();
+		plate=dataEntryPlate();
+		
+		createCar(brand, color, plate);//LLamar al método para almacenar la info
+	}
+	
+	public void dataEntryVehiclestypebike() throws Exception {
+		String brand="";
+		String color="";
+		String plate="";
+		
+		brand=color=plate="";//Ponemos a 0 las variables cada vez que entramos en el bucle
+		brand=dataentrybrand();
+	
+		color=dataEntryColor();
+		plate=dataEntryPlate();
+		
+		createBike(brand, color, plate);//LLamar al método para almacenar la info
+}
+	
+	
 	//Método para la entrada de la marca
 	public String dataentrybrand() {
 		String brandin="";
-		System.out.println("Introduce la Marca del vehiculo: ");
-		brandin= registro.nextLine();
-		brandin = brandin.trim();//Eliminación de espacios vacios al princpio y al final
+		do {
+			System.out.println("Introduce la Marca del vehiculo: ");
+			brandin= registro.nextLine();
+			brandin = brandin.trim();//Eliminación de espacios vacios al princpio y al final
+			brandin = brandin.toUpperCase();
+		}while(brandin.isEmpty());
 		return brandin;
 	}
 	
@@ -53,6 +68,7 @@ public class DataEntryVehicles {
 			System.out.println("Introduce el color del vehiculo: ");
 			colorin= registro.nextLine();
 			colorin = colorin.trim();
+			colorin = colorin.toUpperCase();
 		}while(colorin.equals(""));
 		return colorin;
 	}
@@ -65,7 +81,10 @@ public class DataEntryVehicles {
 			System.out.println("Introduce la matricula del vehiculo: ");
 			platein= registro.nextLine();
 			platein = platein.trim();
+			platein = platein.replace(" ", ""); //eliminamos posibles espacios intermedios
+			platein = platein.toUpperCase();
 			controlplateisok=controlPlateIsOK(platein);
+			if (repository.contains(platein)) controlplateisok = false;//Verificamos que la matricula no esté introducida.
 		}while((platein.equals("") || !controlplateisok));
 		return platein;
 	}
@@ -74,7 +93,6 @@ public class DataEntryVehicles {
 	public boolean controlPlateIsOK (String plate) {
 		String platenumbers="";
 		String plateletters="";
-		plate = plate.replace(" ", ""); //eliminamos posibles espacios intermedios.
 		boolean controlplateisok=true;
 		
 		if (plate.length()<6 || plate.length()>7) { //Verificamos que la longitud de la matricula sea correcta.
@@ -119,7 +137,7 @@ public class DataEntryVehicles {
 		return controlplatenumberisok;
 	}
 	
-	//Metodo para añadir
+	//Metodo para añadir  CAR
 	public void createCar(String brand, String color, String plate) throws Exception{
 		List<Wheel> frontWheels = new ArrayList<>();
 		List<Wheel> rearWheels = new ArrayList<>();
@@ -141,19 +159,81 @@ public class DataEntryVehicles {
 				controlexception=false;
 			}
 		}while (!controlexception); //Repetimos entrada mientras haya excepciones
+	}
+	
+	//Metodo para añadir  CAR
+	public void createBike(String brand, String color, String plate) throws Exception{
+		List<Wheel> bikeWheels = new ArrayList<>();
 		
+		Bike bike = new Bike(brand, color, plate );
+		boolean controlexception=false;
+		do {
+			try {//control de excepciones de las ruedas
+				bikeWheels.clear();//Ponemos a 0 el array.
+				
+				wheels = controllerwheels.dataEntryWheelsBike(); //pdte
+				bikeWheels.add(wheels.get(0));
+				bikeWheels.add(wheels.get(1));
+				bike.addWheels(bikeWheels);
+				repository.addVehicle(bike);
+				controlexception=true;
+			}catch (Exception e) {
+				controlexception=false;
+			}
+		}while (!controlexception); //Repetimos entrada mientras haya excepciones
 	}
 	
 	
+	//Mostrar todos los vehiculos
 	public void dataOutVehicles() {
 		List<Vehicle> vehicles = repository.getAllVehicle();
+		if (vehicles.isEmpty()){
+			System.out.println("NO SE HAN DETECTADO DATOS DE VEHICULOS.");
+		}
+		else {
+			
+			for (Vehicle vehicleiterator : vehicles) {
+				System.out.println("\n" + vehicleiterator.getVehicle());
+			}
 		
-		for (Vehicle vehicleiterator : vehicles) {
-			System.out.println("\n"+ vehicleiterator.getVehicle());
-	
 		}
 	
-		//Pdte implementar más opciones de salida de datos
+	}
+	//Mostrar todos los vehiculos tipo CAR
+	public void dataOutVehiclesCar() {
+		List<Vehicle> vehicles = repository.getAllVehicle();
+		if (vehicles.isEmpty()){
+			System.out.println("NO SE HAN DETECTADO DATOS DE VEHICULOS.");
+		}
+		else {
+			System.out.println("ESTOS SON LOS VEHICULOS TIPO CAR:");
+			for (Vehicle vehicleiterator : vehicles) {
+				if(vehicleiterator.getClass() == Car.class) {//comparar clases
+					System.out.println("\n"+ vehicleiterator.getVehicle());
+				}
+			}
+				
+		}
+		
+		
+	}
+	//Mostrar todos los vehiculos tipo BIKE
+	public void dataOutVehiclesBike() {
+		List<Vehicle> vehicles = repository.getAllVehicle();
+		
+		if (vehicles.isEmpty()){
+			System.out.println("NO SE HAN DETECTADO DATOS DE VEHICULOS.");
+		}
+		else {
+			System.out.println("ESTOS SON LOS VEHICULOS TIPO BIKE:");
+			for (Vehicle vehicleiterator : vehicles) {
+				if(vehicleiterator.getClass() == Bike.class) {//comparar clasesc
+					System.out.println("\n"+ vehicleiterator.getVehicle());
+				}
+			}
+				
+		}
+		
 	}
 	
 	

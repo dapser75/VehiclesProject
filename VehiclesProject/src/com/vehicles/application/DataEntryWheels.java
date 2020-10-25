@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import com.vehicles.project.*;
-import java.io.IOException; 
+
 
 
 public class DataEntryWheels {
@@ -21,7 +21,12 @@ public class DataEntryWheels {
 		wheels.add(3,dataEntryWheels(" trasera izquierda: "));
 		return wheels; 
 	}
-
+	
+	public List<Wheel> dataEntryWheelsBike()throws Exception {
+		wheels.add(0, dataEntryWheels(" delantera: "));
+		wheels.add(1,dataEntryWheels(" trasera: "));
+		return wheels;
+	}
 	
 	//Metodo para la introducción de las ruedas
 	public Wheel dataEntryWheels(String wheeltype) throws Exception{
@@ -73,5 +78,8 @@ public class DataEntryWheels {
 		//}while(!controldatotipofloat || diameterwheel<0.4 || diameterwheel>4);//repetimos bucle hasta que el dato introducido no sea correcto
 		return diameterwheel;
 	}//fin metodo entrada diametro
+
+
+	
 			
 }

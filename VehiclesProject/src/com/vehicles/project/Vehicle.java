@@ -26,5 +26,9 @@ public abstract class Vehicle {
 	public abstract String getWheels();
 	
 	
-
+	public String getPlate() {
+		return plate;
+	}
+	
+	
 }

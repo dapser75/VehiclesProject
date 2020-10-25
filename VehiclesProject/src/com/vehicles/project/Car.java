@@ -35,12 +35,19 @@ public class Car extends Vehicle {
 	@Override
 	public String getVehicle() {
 		String vehicle="";
-		vehicle = "\n.- Tipo de Vehículo: Coche. Marca: " + brand + ". Color: " + color +
+		vehicle = "\n.- Tipo de Vehículo: CAR. Marca: " + brand + ". Color: " + color +
 					". Matricula: " + plate + ". \n\tRuedas: " + getWheels();
 	
 		return vehicle;
 	}
 	
+	public String getCar() {
+		String vehicle="";
+		vehicle = "\n.- Tipo de Vehículo: CAR. Marca: " + brand + ". Color: " + color +
+					". Matricula: " + plate + ". \n\tRuedas: " + getWheels();
+	
+		return vehicle;
+	}
 	@Override
 	public String getWheels() {
 		String allwheelsvehicle="";

@@ -21,4 +21,15 @@ public class VehiclesRepository {
 		vehicles.add(vehicle);
 	}
 	
+	public boolean contains(String plate){
+		boolean plateisrepeat=false;
+		for (int i=0; i<vehicles.size(); i++) {
+			if (vehicles.get(i).getPlate().equalsIgnoreCase(plate)) {
+				System.out.println("Matricula duplicada.");
+				plateisrepeat=true;
+			}
+		}
+		
+		return plateisrepeat;
+	}
 }
