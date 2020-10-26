@@ -25,7 +25,7 @@ public class Wheel {
 		else return false;
 	}
 	
-	//Meodo para retornar los valores de una rueda
+	//Metodo para retornar los valores de una rueda
 	public String getwheel() {
 		return ("Marca: "+ brand + " Medida: " + diameter) ;
 	}

@@ -137,7 +137,36 @@ public class DataEntryVehicles {
 		return controlplatenumberisok;
 	}
 	
-	//Metodo para añadir  CAR
+	//Metodo para añadir  CAR nuevo matedo by dapser75 26/10/20 -> control igualdad de neumaticos por eje
+		public void createCar(String brand, String color, String plate) throws Exception{
+			List<Wheel> frontWheels = new ArrayList<>();
+			List<Wheel> rearWheels = new ArrayList<>();
+			Car car = new Car(brand, color, plate );
+			boolean controlexception=false;
+			do {
+				try {//control de excepciones de las ruedas
+					frontWheels.clear();//Ponemos a 0 el array.
+					rearWheels.clear();
+					wheels = controllerwheels.dataEntryWheelsCar();
+					frontWheels.add(wheels.get(0));
+					frontWheels.add(wheels.get(1));
+					rearWheels.add(wheels.get(2));
+					rearWheels.add(wheels.get(3));
+					
+					car.addWheels(frontWheels, rearWheels); ///control de excepción
+					repository.addVehicle(car);
+					controlexception=true;
+				}catch (Exception e) {
+					controlexception=false;
+				}
+			}while (!controlexception); //Repetimos entrada mientras haya excepciones
+		}
+	
+	
+		
+		
+	/*
+	//Metodo para añadir  CAR antiguo sin coontrol de excepciones por codigo
 	public void createCar(String brand, String color, String plate) throws Exception{
 		List<Wheel> frontWheels = new ArrayList<>();
 		List<Wheel> rearWheels = new ArrayList<>();
@@ -152,6 +181,7 @@ public class DataEntryVehicles {
 				frontWheels.add(wheels.get(1));
 				rearWheels.add(wheels.get(2));
 				rearWheels.add(wheels.get(3));
+		
 				car.addWheels(frontWheels, rearWheels); ///control de excepción
 				repository.addVehicle(car);
 				controlexception=true;
@@ -159,7 +189,7 @@ public class DataEntryVehicles {
 				controlexception=false;
 			}
 		}while (!controlexception); //Repetimos entrada mientras haya excepciones
-	}
+	}*/
 	
 	//Metodo para añadir  CAR
 	public void createBike(String brand, String color, String plate) throws Exception{

@@ -14,6 +14,20 @@ public class Car extends Vehicle {
 	}
 
 	public void addTwoWheels(List<Wheel> wheels) throws Exception {
+		
+		Wheel rightWheel = wheels.get(0);
+		Wheel leftWheel = wheels.get(1);
+
+		this.wheels.add(leftWheel);
+		this.wheels.add(rightWheel);
+	}
+	
+	
+	
+	
+	
+	/*
+	public void addTwoWheels(List<Wheel> wheels) throws Exception {
 		if (wheels.size() != 2) {
 			System.out.println("\nERROR: Un coche debe tener 2 ruedas por eje.");
 			throw new Exception();
@@ -29,7 +43,7 @@ public class Car extends Vehicle {
 
 		this.wheels.add(leftWheel);
 		this.wheels.add(rightWheel);
-	}
+	}*/
 
 	//Método para devolver los datos pertenecientes a la clase "Car".
 	@Override
